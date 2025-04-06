@@ -18,6 +18,7 @@ docker-compose.override.yml
 
 # PostgreSQL (volúmenes o dumps locales)
 *.sql
+!db/init.sql  # Permitir el seguimiento de init.sql
 *.dump
 pg_data/
 db_data/
