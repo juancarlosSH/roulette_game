@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
@@ -10,6 +10,8 @@ services:
       - .env
     depends_on:
       - db
+    volumes:
+      - ./backend:/app # Asegúrate de que los archivos de backend estén disponibles en el contenedor
 
   db:
     image: postgres:15
