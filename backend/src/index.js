@@ -1,6 +1,7 @@
 import express from "express";
 import pg from "pg";
 import userRoutes from "./routes/userRoutes.js"; // Importar las rutas de usuarios
+import gameRoutes from "./routes/gameRoutes.js"; // Importar las rutas de juegos
 
 const { Pool } = pg;
 
@@ -29,8 +30,17 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Usar las rutas definidas en userRoutes.js
-app.use(userRoutes);
+// Prefijar las rutas con "/api"
+app.use("/api/users", userRoutes); // Usar las rutas de usuarios
+app.use("/api/games", gameRoutes); // Usar las rutas de juegos
+
+// Manejo de errores global
+app.use((err, req, res, next) => {
+  console.error(err);
+  res
+    .status(500)
+    .send({ error: "Algo salió mal, inténtalo de nuevo más tarde." });
+});
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
