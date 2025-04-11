@@ -1,14 +1,14 @@
 import express from "express";
 import pg from "pg";
-import userRoutes from "./routes/userRoutes.js"; // Importar las rutas de usuarios
-import gameRoutes from "./routes/gameRoutes.js"; // Importar las rutas de juegos
+import userRoutes from "./routes/userRoutes.js"; // Import user routes
+import gameRoutes from "./routes/gameRoutes.js"; // Import game routes
 
 const { Pool } = pg;
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.json()); // Para poder procesar el cuerpo de las solicitudes en formato JSON
+app.use(express.json()); // Enable JSON request body parsing
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -21,27 +21,25 @@ const pool = new Pool({
 app.get("/", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
-    res.send(
-      `¡Hola desde el backend! Hora actual del servidor: ${result.rows[0].now}`
-    );
+    res.send(`Hello from the backend! Server time: ${result.rows[0].now}`);
   } catch (error) {
-    console.error("Error al conectar con la base de datos:", error);
-    res.status(500).send("Error al conectar con la base de datos");
+    console.error("Error connecting to the database:", error);
+    res.status(500).send("Error connecting to the database");
   }
 });
 
-// Prefijar las rutas con "/api"
-app.use("/api/users", userRoutes); // Usar las rutas de usuarios
-app.use("/api/games", gameRoutes); // Usar las rutas de juegos
+// Prefix routes with "/api"
+app.use("/api/users", userRoutes); // Use user routes
+app.use("/api/games", gameRoutes); // Use game routes
 
-// Manejo de errores global
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res
     .status(500)
-    .send({ error: "Algo salió mal, inténtalo de nuevo más tarde." });
+    .send({ error: "Something went wrong, please try again later." });
 });
 
 app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+  console.log(`Server listening at http://localhost:${port}`);
 });

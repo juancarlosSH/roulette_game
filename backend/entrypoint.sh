@@ -1,16 +1,16 @@
 #!/bin/bash
 
-# Salir inmediatamente si un comando falla
+# Exit immediately if a command fails
 set -e
 
-# Esperar a que la base de datos esté lista
+# Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to start..."
 until PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c '\q' 2>/dev/null; do
   echo "PostgreSQL is not ready yet, waiting..."
   sleep 2
 done
 
-# Verificar si ya hay datos en la tabla users
+# Check if there is data in the users table
 echo "Checking if the users table has data..."
 USER_COUNT=$(PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -t -c "SELECT COUNT(*) FROM users;" | xargs)
 
@@ -21,6 +21,6 @@ else
   node generateFakeData.js
 fi
 
-# Iniciar la aplicación
+# Start the application
 echo "Starting the application..."
 exec "$@"

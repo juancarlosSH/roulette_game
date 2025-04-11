@@ -8,7 +8,7 @@ WORKDIR /app
 # Copy only the necessary files to install dependencies
 COPY package*.json ./
 
-# Install dependencies here
+# Install dependencies
 RUN npm install
 
 # Then copy the rest of the project (to avoid invalidating the previous cache)

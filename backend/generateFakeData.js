@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker"; // Importación de faker
+import { faker } from "@faker-js/faker"; // Importing faker
 import pkg from "pg";
 
-const { Pool } = pkg; // Correcta importación de Pool desde pg
+const { Pool } = pkg; // Correct import of Pool from pg
 
-// Configuración de la base de datos usando variables de entorno
+// Database configuration using environment variables
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -15,12 +15,12 @@ const pool = new Pool({
 const generateFakeUsers = async (numUsers = 10) => {
   const users = [];
   for (let i = 0; i < numUsers; i++) {
-    const name = faker.person.fullName(); // Usando la nueva función 'person.fullName()'
+    const name = faker.person.fullName(); // Using the new 'person.fullName()' function
     const birthDate = faker.date.past(30, "2000-01-01");
     const email = faker.internet.email();
     const password = faker.internet.password();
-    const isAdmin = Math.random() > 0.8; // Aproximadamente un 20% de los usuarios serán administradores
-    const highScore = faker.number.int({ min: 0, max: 1000 }); // Usando 'number.int()' para generar un número
+    const isAdmin = Math.random() > 0.8; // Approximately 20% of users will be admins
+    const highScore = faker.number.int({ min: 0, max: 1000 }); // Using 'number.int()' to generate a number
 
     users.push({
       name,
@@ -32,7 +32,7 @@ const generateFakeUsers = async (numUsers = 10) => {
     });
   }
 
-  // Insertar usuarios en la base de datos
+  // Insert users into the database
   for (const user of users) {
     await pool.query(
       "INSERT INTO users (name, birth_date, email, password, is_admin, high_score) VALUES ($1, $2, $3, $4, $5, $6)",
@@ -57,7 +57,7 @@ const generateFakeGames = async (numGames = 10) => {
   const games = [];
   for (let i = 0; i < numGames; i++) {
     const userId = userIds[Math.floor(Math.random() * userIds.length)];
-    const score = faker.number.int({ min: 0, max: 1000 }); // Usando 'number.int()' para generar un número
+    const score = faker.number.int({ min: 0, max: 1000 }); // Using 'number.int()' to generate a number
 
     games.push({
       userId,
@@ -65,7 +65,7 @@ const generateFakeGames = async (numGames = 10) => {
     });
   }
 
-  // Insertar juegos en la base de datos
+  // Insert games into the database
   for (const game of games) {
     await pool.query("INSERT INTO games (user_id, score) VALUES ($1, $2)", [
       game.userId,

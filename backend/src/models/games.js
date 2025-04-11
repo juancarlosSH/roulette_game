@@ -9,7 +9,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Crear una nueva partida
+// Create a new game
 const createGame = async (gameData) => {
   const { user_id, score } = gameData;
   const query = `
@@ -19,38 +19,38 @@ const createGame = async (gameData) => {
   `;
   try {
     const res = await pool.query(query, [user_id, score]);
-    return res.rows[0]; // Devuelve la partida creada
+    return res.rows[0]; // Returns the created game
   } catch (error) {
-    throw new Error(`Error al crear la partida: ${error.message}`);
+    throw new Error(`Error creating the game: ${error.message}`);
   }
 };
 
-// Obtener todas las partidas
+// Get all games
 const getAllGames = async () => {
   const query = "SELECT * FROM games;";
   try {
     const res = await pool.query(query);
-    return res.rows; // Devuelve todas las partidas
+    return res.rows; // Returns all games
   } catch (error) {
-    throw new Error(`Error al obtener las partidas: ${error.message}`);
+    throw new Error(`Error fetching games: ${error.message}`);
   }
 };
 
-// Obtener una partida por ID
+// Get a game by ID
 const getGameById = async (id) => {
   const query = "SELECT * FROM games WHERE id = $1;";
   try {
     const res = await pool.query(query, [id]);
     if (res.rows.length === 0) {
-      throw new Error("Partida no encontrada");
+      throw new Error("Game not found");
     }
-    return res.rows[0]; // Devuelve la partida
+    return res.rows[0]; // Returns the game
   } catch (error) {
-    throw new Error(`Error al obtener la partida: ${error.message}`);
+    throw new Error(`Error fetching the game: ${error.message}`);
   }
 };
 
-// Actualizar una partida
+// Update a game
 const updateGame = async (id, gameData) => {
   const { user_id, score } = gameData;
   const query = `
@@ -61,23 +61,23 @@ const updateGame = async (id, gameData) => {
   `;
   try {
     const res = await pool.query(query, [user_id, score, id]);
-    return res.rows[0]; // Devuelve la partida actualizada
+    return res.rows[0]; // Returns the updated game
   } catch (error) {
-    throw new Error(`Error al actualizar la partida: ${error.message}`);
+    throw new Error(`Error updating the game: ${error.message}`);
   }
 };
 
-// Eliminar una partida
+// Delete a game
 const deleteGame = async (id) => {
   const query = "DELETE FROM games WHERE id = $1 RETURNING *;";
   try {
     const res = await pool.query(query, [id]);
     if (res.rows.length === 0) {
-      throw new Error("Partida no encontrada");
+      throw new Error("Game not found");
     }
-    return res.rows[0]; // Devuelve la partida eliminada
+    return res.rows[0]; // Returns the deleted game
   } catch (error) {
-    throw new Error(`Error al eliminar la partida: ${error.message}`);
+    throw new Error(`Error deleting the game: ${error.message}`);
   }
 };
 

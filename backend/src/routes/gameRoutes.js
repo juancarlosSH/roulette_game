@@ -9,19 +9,19 @@ import {
 
 const router = express.Router();
 
-// Crear una partida
+// Create a new game
 router.post("/games", createGameController);
 
-// Obtener todas las partidas
+// Get all games
 router.get("/games", getAllGamesController);
 
-// Obtener una partida por ID
+// Get a game by ID
 router.get("/games/:id", getGameByIdController);
 
-// Actualizar una partida
+// Update a game
 router.put("/games/:id", updateGameController);
 
-// Eliminar una partida
+// Delete a game
 router.delete("/games/:id", deleteGameController);
 
 export default router;

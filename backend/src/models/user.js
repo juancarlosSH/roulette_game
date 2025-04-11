@@ -1,6 +1,6 @@
 import pg from "pg";
 
-// Configuración de la base de datos
+// Database configuration
 const { Pool } = pg;
 
 const pool = new Pool({
@@ -11,7 +11,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Función para crear un nuevo usuario
+// Function to create a new user
 const createUser = async (userData) => {
   const {
     name,
@@ -37,40 +37,40 @@ const createUser = async (userData) => {
       is_admin,
       high_score,
     ]);
-    return res.rows[0]; // Devuelve el usuario recién creado
+    return res.rows[0]; // Returns the newly created user
   } catch (error) {
-    throw new Error(`Error al crear el usuario: ${error.message}`);
+    throw new Error(`Error creating the user: ${error.message}`);
   }
 };
 
-// Función para obtener todos los usuarios
+// Function to get all users
 const getAllUsers = async () => {
   const query = "SELECT * FROM users;";
 
   try {
     const res = await pool.query(query);
-    return res.rows; // Devuelve todos los usuarios
+    return res.rows; // Returns all users
   } catch (error) {
-    throw new Error(`Error al obtener los usuarios: ${error.message}`);
+    throw new Error(`Error fetching users: ${error.message}`);
   }
 };
 
-// Función para obtener un usuario por ID
+// Function to get a user by ID
 const getUserById = async (id) => {
   const query = "SELECT * FROM users WHERE id = $1;";
 
   try {
     const res = await pool.query(query, [id]);
     if (res.rows.length === 0) {
-      throw new Error("Usuario no encontrado");
+      throw new Error("User not found");
     }
-    return res.rows[0]; // Devuelve el usuario encontrado
+    return res.rows[0]; // Returns the found user
   } catch (error) {
-    throw new Error(`Error al obtener el usuario: ${error.message}`);
+    throw new Error(`Error fetching the user: ${error.message}`);
   }
 };
 
-// Función para actualizar un usuario
+// Function to update a user
 const updateUser = async (id, userData) => {
   const { name, birth_date, email, password, is_admin, high_score } = userData;
 
@@ -91,24 +91,24 @@ const updateUser = async (id, userData) => {
       high_score,
       id,
     ]);
-    return res.rows[0]; // Devuelve el usuario actualizado
+    return res.rows[0]; // Returns the updated user
   } catch (error) {
-    throw new Error(`Error al actualizar el usuario: ${error.message}`);
+    throw new Error(`Error updating the user: ${error.message}`);
   }
 };
 
-// Función para eliminar un usuario
+// Function to delete a user
 const deleteUser = async (id) => {
   const query = "DELETE FROM users WHERE id = $1 RETURNING *;";
 
   try {
     const res = await pool.query(query, [id]);
     if (res.rows.length === 0) {
-      throw new Error("Usuario no encontrado");
+      throw new Error("User not found");
     }
-    return res.rows[0]; // Devuelve el usuario eliminado
+    return res.rows[0]; // Returns the deleted user
   } catch (error) {
-    throw new Error(`Error al eliminar el usuario: ${error.message}`);
+    throw new Error(`Error deleting the user: ${error.message}`);
   }
 };
 
