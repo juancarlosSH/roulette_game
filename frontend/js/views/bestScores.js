@@ -1,13 +1,35 @@
-export function BestScoresView() {
-  return `
-    <div class="text-center">
-      <h1 class="mb-4">🏆 Mejores Puntajes</h1>
-      <p>Estos son los jugadores con los puntajes más altos.</p>
-      <ul class="list-group mx-auto" style="max-width: 400px;">
-        <li class="list-group-item">Jugador 1 - 120 pts</li>
-        <li class="list-group-item">Jugador 2 - 110 pts</li>
-        <li class="list-group-item">Jugador 3 - 105 pts</li>
-      </ul>
-    </div>
-  `;
+export function renderBestScoresView() {
+  const container = document.createElement("div");
+  container.classList.add("text-center");
+
+  const heading = document.createElement("h1");
+  heading.classList.add("mb-4");
+  heading.textContent = "🏆 Mejores Puntajes";
+  container.appendChild(heading);
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = "Estos son los jugadores con los puntajes más altos.";
+  container.appendChild(paragraph);
+
+  const listGroup = document.createElement("ul");
+  listGroup.classList.add("list-group", "mx-auto");
+  listGroup.style.maxWidth = "400px";
+
+  // Crear los elementos de la lista
+  const scores = [
+    "Jugador 1 - 120 pts",
+    "Jugador 2 - 110 pts",
+    "Jugador 3 - 105 pts",
+  ];
+
+  scores.forEach((score) => {
+    const listItem = document.createElement("li");
+    listItem.classList.add("list-group-item");
+    listItem.textContent = score;
+    listGroup.appendChild(listItem);
+  });
+
+  container.appendChild(listGroup);
+
+  return container;
 }

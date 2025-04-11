@@ -1,13 +1,13 @@
-import { HomeView } from "./views/home.js";
-import { PlayView } from "./views/play.js";
-import { BestScoresView } from "./views/bestScores.js";
-import { PlayerInfoView } from "./views/playerInfo.js";
+import { renderHomeView } from "./views/home.js";
+import { renderPlayView } from "./views/play.js";
+import { renderBestScoresView } from "./views/bestScores.js";
+import { renderPlayerInfoView } from "./views/playerInfo.js";
 
 const routes = {
-  "/": HomeView,
-  "/play": PlayView,
-  "/scores": BestScoresView,
-  "/player": PlayerInfoView,
+  "/": renderHomeView,
+  "/play": renderPlayView,
+  "/scores": renderBestScoresView,
+  "/player": renderPlayerInfoView,
 };
 
 export function initRouter() {
@@ -24,6 +24,11 @@ export function initRouter() {
 
 function renderRoute() {
   const path = window.location.pathname;
-  const view = routes[path] || HomeView;
-  document.getElementById("app").innerHTML = view();
+  const view = routes[path] || renderHomeView;
+  const appElement = document.getElementById("app");
+  const viewElement = view(); // Ahora view devuelve un elemento DOM, no una cadena
+
+  // Limpiar el contenido anterior antes de insertar el nuevo
+  appElement.innerHTML = "";
+  appElement.appendChild(viewElement); // Agregar el nuevo contenido como un elemento DOM
 }
