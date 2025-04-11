@@ -3,6 +3,7 @@ import {
   createGameController,
   getAllGamesController,
   getGameByIdController,
+  getTopScoresController,
   updateGameController,
   deleteGameController,
 } from "../controllers/gameController.js";
@@ -10,18 +11,21 @@ import {
 const router = express.Router();
 
 // Create a new game
-router.post("/games", createGameController);
+router.post("/", createGameController);
 
 // Get all games
-router.get("/games", getAllGamesController);
+router.get("/", getAllGamesController);
+
+// Get top scores
+router.get("/top-scores", getTopScoresController);
 
 // Get a game by ID
-router.get("/games/:id", getGameByIdController);
+router.get("/:id", getGameByIdController);
 
 // Update a game
-router.put("/games/:id", updateGameController);
+router.put("/:id", updateGameController);
 
 // Delete a game
-router.delete("/games/:id", deleteGameController);
+router.delete("/:id", deleteGameController);
 
 export default router;

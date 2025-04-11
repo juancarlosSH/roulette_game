@@ -50,6 +50,28 @@ const getGameById = async (id) => {
   }
 };
 
+// Get top N scores with user info
+const getTopScores = async (limit = 10) => {
+  const query = `
+    SELECT
+      users.id AS user_id,
+      users.name,
+      MAX(games.score) AS top_score
+    FROM games
+    JOIN users ON games.user_id = users.id
+    GROUP BY users.id, users.name
+    ORDER BY top_score DESC
+    LIMIT $1;
+  `;
+
+  try {
+    const res = await pool.query(query, [limit]);
+    return res.rows;
+  } catch (error) {
+    throw new Error(`Error fetching top scores: ${error.message}`);
+  }
+};
+
 // Update a game
 const updateGame = async (id, gameData) => {
   const { user_id, score } = gameData;
@@ -81,4 +103,11 @@ const deleteGame = async (id) => {
   }
 };
 
-export { createGame, getAllGames, getGameById, updateGame, deleteGame };
+export {
+  createGame,
+  getAllGames,
+  getGameById,
+  getTopScores,
+  updateGame,
+  deleteGame,
+};

@@ -2,16 +2,12 @@ import {
   createUser,
   getAllUsers,
   getUserById,
-  getTopUsersByHighScore,
   updateUser,
   deleteUser,
 } from "../models/user.js";
 
 export const createUserController = async (req, res) => {
   const userData = req.body;
-
-  // Si no se pasa un `high_score`, asignamos 0 por defecto
-  userData.high_score = userData.high_score || 0;
 
   try {
     const user = await createUser(userData);
@@ -40,16 +36,6 @@ export const getUserByIdController = async (req, res) => {
   } catch (error) {
     console.error("Error al obtener el usuario:", error);
     res.status(404).send(error.message);
-  }
-};
-
-export const getHighScoresController = async (req, res) => {
-  try {
-    const topUsers = await getTopUsersByHighScore();
-    res.status(200).json(topUsers);
-  } catch (error) {
-    console.error("Error fetching high scores:", error);
-    res.status(500).send(error.message);
   }
 };
 

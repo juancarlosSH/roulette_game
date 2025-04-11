@@ -3,7 +3,6 @@ import {
   createUserController,
   getAllUsersController,
   getUserByIdController,
-  getHighScoresController,
   updateUserController,
   deleteUserController,
 } from "../controllers/userController.js";
@@ -11,21 +10,18 @@ import {
 const router = express.Router();
 
 // Create a user
-router.post("/users", createUserController);
+router.post("/", createUserController);
 
 // Get all users
-router.get("/users", getAllUsersController);
+router.get("/", getAllUsersController);
 
 // Get a user by ID
-router.get("/users/:id", getUserByIdController);
-
-// Get top users by high_score
-router.get("/high-scores", getHighScoresController);
+router.get("/:id", getUserByIdController);
 
 // Update a user
-router.put("/users/:id", updateUserController);
+router.put("/:id", updateUserController);
 
 // Delete a user
-router.delete("/users/:id", deleteUserController);
+router.delete("/:id", deleteUserController);
 
 export default router;

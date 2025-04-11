@@ -4,8 +4,6 @@ CREATE TABLE IF NOT EXISTS users (
     birth_date DATE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    is_admin BOOLEAN DEFAULT FALSE,
-    high_score INTEGER DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -12,33 +12,58 @@ export async function renderBestScoresView() {
   container.appendChild(paragraph);
 
   const listGroup = document.createElement("ul");
-  listGroup.classList.add("list-group", "mx-auto");
+  listGroup.classList.add("list-group", "mx-auto", "mb-4");
   listGroup.style.maxWidth = "400px";
 
-  // Try fetching the data and render the list of high scores
   try {
-    const response = await fetch("http://localhost:3000/api/users/high-scores");
+    const response = await fetch("http://localhost:3000/api/games/top-scores");
     if (!response.ok) throw new Error("Failed to fetch high scores");
 
-    const users = await response.json();
+    const scores = await response.json();
 
-    // Check if users are returned
-    if (Array.isArray(users) && users.length > 0) {
-      users.forEach((user) => {
+    if (Array.isArray(scores) && scores.length > 0) {
+      scores.forEach((entry, index) => {
         const listItem = document.createElement("li");
-        listItem.classList.add("list-group-item");
-        listItem.textContent = `${user.name} - ${user.high_score} pts`;
+        listItem.classList.add(
+          "list-group-item",
+          "d-flex",
+          "justify-content-between",
+          "align-items-center"
+        );
+
+        // Ranking number + emoji
+        let rankText = `${index + 1}°`;
+        let medal = "";
+
+        switch (index) {
+          case 0:
+            medal = "🥇";
+            listItem.style.backgroundColor = "#ffd70033";
+            break;
+          case 1:
+            medal = "🥈";
+            listItem.style.backgroundColor = "#c0c0c033";
+            break;
+          case 2:
+            medal = "🥉";
+            listItem.style.backgroundColor = "#cd7f3233";
+            break;
+        }
+
+        listItem.innerHTML = `
+          <span>${medal} ${rankText} ${entry.name}</span>
+          <span><strong>${entry.top_score}</strong> pts</span>
+        `;
+
         listGroup.appendChild(listItem);
       });
     } else {
-      // Show a message if no users are found
       const noDataItem = document.createElement("li");
       noDataItem.classList.add("list-group-item", "text-warning");
       noDataItem.textContent = "No high scores available.";
       listGroup.appendChild(noDataItem);
     }
   } catch (error) {
-    // Handle errors gracefully and add a fallback error message
     const errorItem = document.createElement("li");
     errorItem.classList.add("list-group-item", "text-danger");
     errorItem.textContent =

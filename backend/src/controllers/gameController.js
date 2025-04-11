@@ -2,9 +2,10 @@ import {
   createGame,
   getAllGames,
   getGameById,
+  getTopScores,
   updateGame,
   deleteGame,
-} from "../models/games.js";
+} from "../models/game.js";
 
 export const createGameController = async (req, res) => {
   const gameData = req.body;
@@ -35,6 +36,16 @@ export const getGameByIdController = async (req, res) => {
   } catch (error) {
     console.error("Error fetching the game:", error);
     res.status(404).send(error.message);
+  }
+};
+
+export const getTopScoresController = async (req, res) => {
+  try {
+    const topScores = await getTopScores();
+    res.status(200).json(topScores);
+  } catch (error) {
+    console.error("Error fetching top scores:", error);
+    res.status(500).send(error.message);
   }
 };
 

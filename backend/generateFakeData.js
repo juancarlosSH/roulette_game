@@ -1,9 +1,8 @@
-import { faker } from "@faker-js/faker"; // Importing faker
+import { faker } from "@faker-js/faker";
 import pkg from "pg";
 
-const { Pool } = pkg; // Correct import of Pool from pg
+const { Pool } = pkg;
 
-// Database configuration using environment variables
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -12,44 +11,34 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+// Generate fake users (without is_admin and high_score)
 const generateFakeUsers = async (numUsers = 10) => {
   const users = [];
   for (let i = 0; i < numUsers; i++) {
-    const name = faker.person.fullName(); // Using the new 'person.fullName()' function
-    const birthDate = faker.date.past(30, "2000-01-01");
+    const name = faker.person.fullName();
+    const birthDate = faker.date.past({ years: 30, refDate: "2000-01-01" });
     const email = faker.internet.email();
     const password = faker.internet.password();
-    const isAdmin = Math.random() > 0.8; // Approximately 20% of users will be admins
-    const highScore = faker.number.int({ min: 0, max: 1000 }); // Using 'number.int()' to generate a number
 
     users.push({
       name,
       birthDate,
       email,
       password,
-      isAdmin,
-      highScore,
     });
   }
 
-  // Insert users into the database
   for (const user of users) {
     await pool.query(
-      "INSERT INTO users (name, birth_date, email, password, is_admin, high_score) VALUES ($1, $2, $3, $4, $5, $6)",
-      [
-        user.name,
-        user.birthDate,
-        user.email,
-        user.password,
-        user.isAdmin,
-        user.highScore,
-      ]
+      "INSERT INTO users (name, birth_date, email, password) VALUES ($1, $2, $3, $4)",
+      [user.name, user.birthDate, user.email, user.password]
     );
   }
 
   console.log(`${users.length} fake users have been created.`);
 };
 
+// Generate fake games
 const generateFakeGames = async (numGames = 10) => {
   const users = await pool.query("SELECT id FROM users");
   const userIds = users.rows.map((user) => user.id);
@@ -57,15 +46,11 @@ const generateFakeGames = async (numGames = 10) => {
   const games = [];
   for (let i = 0; i < numGames; i++) {
     const userId = userIds[Math.floor(Math.random() * userIds.length)];
-    const score = faker.number.int({ min: 0, max: 1000 }); // Using 'number.int()' to generate a number
+    const score = faker.number.int({ min: 0, max: 1000 });
 
-    games.push({
-      userId,
-      score,
-    });
+    games.push({ userId, score });
   }
 
-  // Insert games into the database
   for (const game of games) {
     await pool.query("INSERT INTO games (user_id, score) VALUES ($1, $2)", [
       game.userId,
@@ -80,10 +65,10 @@ const main = async () => {
   try {
     await generateFakeUsers();
     await generateFakeGames();
-    pool.end();
   } catch (error) {
     console.error("Error generating fake data:", error);
-    pool.end();
+  } finally {
+    await pool.end();
   }
 };
 
