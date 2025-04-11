@@ -5,9 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Render the navigation bar
   renderNavbar();
 
-  // Render the main container if it's not already in the HTML
-  if (!document.getElementById("app")) {
-    const appContainer = document.createElement("div");
+  // Check if the 'app' container exists, otherwise create it
+  let appContainer = document.getElementById("app");
+  if (!appContainer) {
+    appContainer = document.createElement("div");
     appContainer.id = "app";
     document.body.appendChild(appContainer);
   }

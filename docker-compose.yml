@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   frontend:
     container_name: vrg_frontend
@@ -18,8 +16,6 @@ services:
       - .env
     depends_on:
       - db
-    volumes:
-      - ./backend:/app # Make sure the backend files are available in the container
 
   db:
     image: postgres:15

@@ -1,11 +1,11 @@
-FROM node:18
+FROM node:18-slim
 
-# We install psql to interact with the PostgreSQL database
-RUN apt-get update && apt-get install -y postgresql-client
+# Install PostgreSQL client to interact with the PostgreSQL database
+RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy only the necessary files to install dependencies
+# Copy only the necessary files to install dependencies to take advantage of Docker cache
 COPY package*.json ./
 
 # Install dependencies
@@ -19,7 +19,7 @@ RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 3000
 
-# We use entrypoint.sh to check if the data is generated and then start the application
+# Use entrypoint.sh to check if the data is generated and then start the application
 ENTRYPOINT ["./entrypoint.sh"]
 
 # The CMD is to start the application after running the entrypoint script

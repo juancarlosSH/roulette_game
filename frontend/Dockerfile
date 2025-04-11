@@ -1,8 +1,8 @@
-# Usamos una imagen base de nginx
-FROM nginx:alpine
+# Use an Nginx base image
+FROM nginx:stable-alpine
 
-# Copiamos los archivos estáticos al directorio por defecto de nginx
+# Copy static files to the default Nginx directory
 COPY . /usr/share/nginx/html
 
-# Exponemos el puerto 80
+# Expose port 80
 EXPOSE 80
