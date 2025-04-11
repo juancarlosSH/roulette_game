@@ -4,22 +4,22 @@ export function renderBestScoresView() {
 
   const heading = document.createElement("h1");
   heading.classList.add("mb-4");
-  heading.textContent = "🏆 Mejores Puntajes";
+  heading.textContent = "🏆 High Scores";
   container.appendChild(heading);
 
   const paragraph = document.createElement("p");
-  paragraph.textContent = "Estos son los jugadores con los puntajes más altos.";
+  paragraph.textContent = "These are the players with the highest scores.";
   container.appendChild(paragraph);
 
   const listGroup = document.createElement("ul");
   listGroup.classList.add("list-group", "mx-auto");
   listGroup.style.maxWidth = "400px";
 
-  // Crear los elementos de la lista
+  // Create the list items
   const scores = [
-    "Jugador 1 - 120 pts",
-    "Jugador 2 - 110 pts",
-    "Jugador 3 - 105 pts",
+    "Player 1 - 120 pts",
+    "Player 2 - 110 pts",
+    "Player 3 - 105 pts",
   ];
 
   scores.forEach((score) => {

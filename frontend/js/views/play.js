@@ -4,17 +4,16 @@ export function renderPlayView() {
 
   const heading = document.createElement("h1");
   heading.classList.add("mb-4");
-  heading.textContent = "🎲 Jugar";
+  heading.textContent = "🎲 Play";
   container.appendChild(heading);
 
   const paragraph = document.createElement("p");
-  paragraph.textContent =
-    "Aquí podrás comenzar una nueva partida. ¡Buena suerte!";
+  paragraph.textContent = "Here you can start a new game. Good luck!";
   container.appendChild(paragraph);
 
   const button = document.createElement("button");
   button.classList.add("btn", "btn-primary", "mt-3");
-  button.textContent = "Iniciar Juego";
+  button.textContent = "Start Game";
   container.appendChild(button);
 
   return container;

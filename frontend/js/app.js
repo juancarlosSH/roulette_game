@@ -2,16 +2,16 @@ import { initRouter } from "./router.js";
 import { renderNavbar } from "./components/navbar.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Renderizamos la barra de navegación
+  // Render the navigation bar
   renderNavbar();
 
-  // Renderizamos el contenedor principal si aún no está en el HTML
+  // Render the main container if it's not already in the HTML
   if (!document.getElementById("app")) {
     const appContainer = document.createElement("div");
     appContainer.id = "app";
     document.body.appendChild(appContainer);
   }
 
-  // Inicializamos el router
+  // Initialize the router
   initRouter();
 });

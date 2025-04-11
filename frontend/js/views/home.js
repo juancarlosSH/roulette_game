@@ -4,11 +4,11 @@ export function renderHomeView() {
 
   const heading = document.createElement("h1");
   heading.classList.add("mb-4");
-  heading.textContent = "🎮 Bienvenido a Video Roulette Game";
+  heading.textContent = "🎮 Welcome to Video Roulette Game";
 
   const paragraph = document.createElement("p");
   paragraph.textContent =
-    "Explora el menú para jugar, ver tus puntajes o conocer tu perfil.";
+    "Explore the menu to play, view your scores, or check your profile.";
 
   container.appendChild(heading);
   container.appendChild(paragraph);

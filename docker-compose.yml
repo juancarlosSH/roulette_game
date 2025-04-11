@@ -11,7 +11,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./backend:/app # Asegúrate de que los archivos de backend estén disponibles en el contenedor
+      - ./backend:/app # Make sure the backend files are available in the container
 
   db:
     image: postgres:15

@@ -26,9 +26,9 @@ function renderRoute() {
   const path = window.location.pathname;
   const view = routes[path] || renderHomeView;
   const appElement = document.getElementById("app");
-  const viewElement = view(); // Ahora view devuelve un elemento DOM, no una cadena
+  const viewElement = view(); // Now view returns a DOM element, not a string
 
-  // Limpiar el contenido anterior antes de insertar el nuevo
+  // Clear the previous content before inserting the new one
   appElement.innerHTML = "";
-  appElement.appendChild(viewElement); // Agregar el nuevo contenido como un elemento DOM
+  appElement.appendChild(viewElement); // Append the new content as a DOM element
 }

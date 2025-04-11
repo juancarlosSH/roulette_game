@@ -4,11 +4,11 @@ export function renderPlayerInfoView() {
 
   const heading = document.createElement("h1");
   heading.classList.add("mb-4");
-  heading.textContent = "🧑 Información del Jugador";
+  heading.textContent = "🧑 Player Information";
   container.appendChild(heading);
 
   const paragraph = document.createElement("p");
-  paragraph.textContent = "Aquí aparecerán tus datos, puntajes y estadísticas.";
+  paragraph.textContent = "Your data, scores, and statistics will appear here.";
   container.appendChild(paragraph);
 
   const card = document.createElement("div");
@@ -20,7 +20,7 @@ export function renderPlayerInfoView() {
 
   const cardTitle = document.createElement("h5");
   cardTitle.classList.add("card-title");
-  cardTitle.textContent = "Nombre: John Doe";
+  cardTitle.textContent = "Name: John Doe";
 
   const emailText = document.createElement("p");
   emailText.classList.add("card-text");
@@ -28,9 +28,9 @@ export function renderPlayerInfoView() {
 
   const scoreText = document.createElement("p");
   scoreText.classList.add("card-text");
-  scoreText.textContent = "Puntaje más alto: 100";
+  scoreText.textContent = "Highest Score: 100";
 
-  // Ensamblar la tarjeta
+  // Assemble the card
   cardBody.appendChild(cardTitle);
   cardBody.appendChild(emailText);
   cardBody.appendChild(scoreText);
