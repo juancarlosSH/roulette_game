@@ -17,7 +17,7 @@ export function renderNavbar() {
   navbarBrand.classList.add("navbar-brand");
   navbarBrand.href = "/";
   navbarBrand.setAttribute("data-link", "");
-  navbarBrand.textContent = "Video Roulette";
+  navbarBrand.textContent = "Roulette game";
 
   // Create the container for the navigation links
   const collapseDiv = document.createElement("div");

@@ -4,7 +4,7 @@ import {
   getGameById,
   updateGame,
   deleteGame,
-} from "../models/game.js";
+} from "../models/games.js";
 
 export const createGameController = async (req, res) => {
   const gameData = req.body;

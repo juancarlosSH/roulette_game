@@ -1,6 +1,14 @@
 version: "3.8"
 
 services:
+  frontend:
+    container_name: vrg_frontend
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
   backend:
     container_name: vrg_backend
     build: ./backend

@@ -70,6 +70,23 @@ const getUserById = async (id) => {
   }
 };
 
+// Function to get top users by high_score
+const getTopUsersByHighScore = async (limit = 10) => {
+  const query = `
+    SELECT id, name, email, high_score
+    FROM users
+    ORDER BY high_score DESC
+    LIMIT $1;
+  `;
+
+  try {
+    const res = await pool.query(query, [limit]);
+    return res.rows; // Returns top users with highest scores
+  } catch (error) {
+    throw new Error(`Error fetching high scores: ${error.message}`);
+  }
+};
+
 // Function to update a user
 const updateUser = async (id, userData) => {
   const { name, birth_date, email, password, is_admin, high_score } = userData;
@@ -112,4 +129,11 @@ const deleteUser = async (id) => {
   }
 };
 
-export { createUser, getAllUsers, getUserById, updateUser, deleteUser };
+export {
+  createUser,
+  getAllUsers,
+  getUserById,
+  getTopUsersByHighScore,
+  updateUser,
+  deleteUser,
+};

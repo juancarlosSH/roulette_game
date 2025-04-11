@@ -4,7 +4,7 @@ export function renderHomeView() {
 
   const heading = document.createElement("h1");
   heading.classList.add("mb-4");
-  heading.textContent = "🎮 Welcome to Video Roulette Game";
+  heading.textContent = "🎮 Welcome to Roulette Game";
 
   const paragraph = document.createElement("p");
   paragraph.textContent =

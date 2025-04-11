@@ -1,13 +1,16 @@
 import express from "express";
 import pg from "pg";
-import userRoutes from "./routes/userRoutes.js"; // Import user routes
-import gameRoutes from "./routes/gameRoutes.js"; // Import game routes
+import cors from "cors"; // Import CORS
+import userRoutes from "./routes/userRoutes.js";
+import gameRoutes from "./routes/gameRoutes.js";
 
 const { Pool } = pg;
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Middleware
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Enable JSON request body parsing
 
 const pool = new Pool({
@@ -29,8 +32,8 @@ app.get("/", async (req, res) => {
 });
 
 // Prefix routes with "/api"
-app.use("/api/users", userRoutes); // Use user routes
-app.use("/api/games", gameRoutes); // Use game routes
+app.use("/api/users", userRoutes);
+app.use("/api/games", gameRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

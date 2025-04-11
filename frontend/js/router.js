@@ -22,13 +22,20 @@ export function initRouter() {
   renderRoute();
 }
 
-function renderRoute() {
+async function renderRoute() {
   const path = window.location.pathname;
   const view = routes[path] || renderHomeView;
   const appElement = document.getElementById("app");
-  const viewElement = view(); // Now view returns a DOM element, not a string
 
   // Clear the previous content before inserting the new one
   appElement.innerHTML = "";
-  appElement.appendChild(viewElement); // Append the new content as a DOM element
+
+  try {
+    const viewElement = await view(); // Ensure the view resolves if it's an async function
+    appElement.appendChild(viewElement); // Append the new content as a DOM element
+  } catch (error) {
+    console.error("Error rendering the view:", error);
+    appElement.innerHTML =
+      "<p>Error loading content. Please try again later.</p>";
+  }
 }

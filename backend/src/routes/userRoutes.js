@@ -3,6 +3,7 @@ import {
   createUserController,
   getAllUsersController,
   getUserByIdController,
+  getHighScoresController,
   updateUserController,
   deleteUserController,
 } from "../controllers/userController.js";
@@ -17,6 +18,9 @@ router.get("/users", getAllUsersController);
 
 // Get a user by ID
 router.get("/users/:id", getUserByIdController);
+
+// Get top users by high_score
+router.get("/high-scores", getHighScoresController);
 
 // Update a user
 router.put("/users/:id", updateUserController);
