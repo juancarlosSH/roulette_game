@@ -1,26 +1,44 @@
-FROM node:18-slim
+# Use official Node.js image with Alpine for smaller size
+FROM node:18-alpine
 
-# Install PostgreSQL client to interact with the PostgreSQL database
-RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+# Install PostgreSQL client and required dependencies
+RUN apk add --no-cache postgresql-client bash
 
+# Create and set working directory
 WORKDIR /app
 
-# Copy only the necessary files to install dependencies to take advantage of Docker cache
+# 1. Copy package files first for better layer caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install production dependencies only (remove devDependencies)
+RUN npm install --production && \
+  npm cache clean --force
 
-# Then copy the rest of the project (to avoid invalidating the previous cache)
+# 2. Copy the rest of the files
 COPY . .
 
-# Ensure that the entrypoint.sh script is executable
-RUN chmod +x /app/entrypoint.sh
+# Set up directories structure
+RUN mkdir -p /db && \
+  mv /app/db/init.sql /db/init.sql && \
+  chmod +x /app/entrypoint.sh
 
-EXPOSE 3000
+# Environment variables (documentation purposes)
+ENV NODE_ENV=production \
+  DB_HOST=postgres \
+  DB_PORT=5432 \
+  DB_USER=postgres \
+  DB_NAME=roulette_game \
+  APP_PORT=3000
 
-# Use entrypoint.sh to check if the data is generated and then start the application
+# Expose the application port
+EXPOSE $APP_PORT
+
+# Health check (optional but recommended)
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD curl -f http://localhost:$APP_PORT/health || exit 1
+
+# Use entrypoint with exec form for proper signal handling
 ENTRYPOINT ["./entrypoint.sh"]
 
-# The CMD is to start the application after running the entrypoint script
+# Default command to run the application
 CMD ["npm", "start"]
