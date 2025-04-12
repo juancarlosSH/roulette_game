@@ -1,7 +1,5 @@
-// frontend/js/components/registerForm.js
-
 export default function RegisterForm() {
-  // Contenedor principal centrado
+  // Centered main container
   const wrapper = document.createElement("div");
   wrapper.classList.add(
     "d-flex",
@@ -15,13 +13,13 @@ export default function RegisterForm() {
   card.style.width = "100%";
   card.style.maxWidth = "400px";
 
-  // Título
+  // Title
   const title = document.createElement("h4");
   title.classList.add("text-center", "mb-4");
   title.textContent = "Register";
   card.appendChild(title);
 
-  // Formulario
+  // Form
   const form = document.createElement("form");
 
   // Name

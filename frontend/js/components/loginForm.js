@@ -1,7 +1,5 @@
-// frontend/js/components/loginForm.js
-
 export default function LoginForm() {
-  // Contenedor principal centrado
+  // Centered main container
   const wrapper = document.createElement("div");
   wrapper.classList.add(
     "d-flex",
@@ -15,15 +13,15 @@ export default function LoginForm() {
   card.style.width = "100%";
   card.style.maxWidth = "400px";
 
-  // Tabs de login/register podrían ir fuera de esta card si decides moverlos luego
+  // Login/register tabs could be moved outside this card if you decide to relocate them later
 
-  // Título
+  // Title
   const title = document.createElement("h4");
   title.classList.add("text-center", "mb-4");
   title.textContent = "Login";
   card.appendChild(title);
 
-  // Formulario
+  // Form
   const form = document.createElement("form");
 
   const emailGroup = document.createElement("div");

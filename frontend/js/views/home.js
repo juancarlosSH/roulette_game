@@ -3,23 +3,23 @@ import RegisterForm from "../components/registerForm.js";
 import DescriptionSection from "../components/descriptionSection.js";
 
 export function renderHomeView() {
-  // Container principal
+  // Main container
   const container = document.createElement("div");
   container.classList.add("container", "py-4");
 
   const row = document.createElement("div");
   row.classList.add("row", "justify-content-center");
 
-  // Columna izquierda (Descripción)
+  // Left column (Description)
   const colLeft = document.createElement("div");
   colLeft.classList.add("col-md-6", "py-4");
   colLeft.appendChild(DescriptionSection());
 
-  // Columna derecha (radio buttons + formulario)
+  // Right column (radio buttons + form)
   const colRight = document.createElement("div");
   colRight.classList.add("col-md-6", "mb-4");
 
-  // Primera row (radio buttons)
+  // First row (radio buttons)
   const radioRow = document.createElement("div");
   radioRow.classList.add("row", "mb-4");
 
@@ -58,7 +58,7 @@ export function renderHomeView() {
   radioGroup.appendChild(registerLabel);
   radioRow.appendChild(radioGroup);
 
-  // Segunda row (formulario dinámico)
+  // Second row (dynamic form)
   const formRow = document.createElement("div");
   formRow.classList.add("row");
 
@@ -69,7 +69,7 @@ export function renderHomeView() {
 
   formRow.appendChild(formContainer);
 
-  // Eventos para cambiar entre login/register
+  // Events to switch between login/register
   loginRadio.addEventListener("change", () => {
     formContainer.innerHTML = "";
     currentForm = LoginForm();
@@ -82,15 +82,15 @@ export function renderHomeView() {
     formContainer.appendChild(currentForm);
   });
 
-  // Agregar subrows a columna derecha
+  // Add subrows to the right column
   colRight.appendChild(radioRow);
   colRight.appendChild(formRow);
 
-  // Agregar columnas al row principal
+  // Add columns to the main row
   row.appendChild(colLeft);
   row.appendChild(colRight);
 
-  // Agregar row al container
+  // Add row to the container
   container.appendChild(row);
 
   return container;

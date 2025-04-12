@@ -1,5 +1,3 @@
-// frontend/js/components/descriptionSection.js
-
 export default function DescriptionSection() {
   const section = document.createElement("section");
   section.classList.add("col");
@@ -35,7 +33,7 @@ export default function DescriptionSection() {
   startButton.classList.add("btn", "btn-primary", "mt-1");
   startButton.textContent = "Start Game";
   startButton.onclick = () => {
-    window.location.hash = "/play"; // Navigate to the play view
+    window.location.hash = "/play";
   };
   section.appendChild(startButton);
 
