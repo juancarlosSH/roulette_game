@@ -1,31 +1,22 @@
 import express from "express";
 import {
-  createGameController,
-  getAllGamesController,
-  getGameByIdController,
-  getTopScoresController,
-  updateGameController,
-  deleteGameController,
-} from "../controllers/gameController.js";
+  createSessionController,
+  getSessionDetailsController,
+  getUserSessionsController,
+} from "../controllers/gameSessionController.js";
+
+import {
+  createRoundController,
+  getSessionRoundsController,
+} from "../controllers/gameRoundController.js";
 
 const router = express.Router();
 
-// Create a new game
-router.post("/", createGameController);
+router.post("/sessions", createSessionController);
+router.get("/sessions/:id", getSessionDetailsController);
+router.get("/users/:userId/sessions", getUserSessionsController);
 
-// Get all games
-router.get("/", getAllGamesController);
-
-// Get top scores
-router.get("/top-scores", getTopScoresController);
-
-// Get a game by ID
-router.get("/:id", getGameByIdController);
-
-// Update a game
-router.put("/:id", updateGameController);
-
-// Delete a game
-router.delete("/:id", deleteGameController);
+router.post("/rounds", createRoundController);
+router.get("/sessions/:sessionId/rounds", getSessionRoundsController);
 
 export default router;
