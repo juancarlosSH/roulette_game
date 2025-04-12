@@ -1,15 +1,5 @@
-import pg from "pg";
-const { Pool } = pg;
+import { pool } from "./db.js";
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-});
-
-// Crear una nueva partida
 const createGameSession = async (userId) => {
   const query = `
     INSERT INTO game_sessions (user_id, final_score, rounds_played)
@@ -25,7 +15,6 @@ const createGameSession = async (userId) => {
   }
 };
 
-// Actualizar puntaje final de una partida
 const updateGameSession = async (sessionId, finalScore, roundsPlayed) => {
   const query = `
     UPDATE game_sessions
@@ -45,7 +34,6 @@ const updateGameSession = async (sessionId, finalScore, roundsPlayed) => {
   }
 };
 
-// Obtener todas las partidas de un usuario
 const getSessionsByUser = async (userId) => {
   const query = `
     SELECT id, final_score, rounds_played, created_at
@@ -62,7 +50,6 @@ const getSessionsByUser = async (userId) => {
   }
 };
 
-// Obtener una partida específica
 const getSessionById = async (sessionId) => {
   const query = `
     SELECT

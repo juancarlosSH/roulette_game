@@ -1,15 +1,5 @@
-import pg from "pg";
-const { Pool } = pg;
+import { pool } from "./db.js";
 
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-});
-
-// Registrar una nueva ronda
 const createGameRound = async (sessionId, userNumber, machineNumber) => {
   const roundScore = userNumber - machineNumber;
 
@@ -37,7 +27,6 @@ const createGameRound = async (sessionId, userNumber, machineNumber) => {
   }
 };
 
-// Obtener todas las rondas de una partida
 const getRoundsBySession = async (sessionId) => {
   const query = `
     SELECT
@@ -59,7 +48,6 @@ const getRoundsBySession = async (sessionId) => {
   }
 };
 
-// Obtener estadísticas de rondas por usuario
 const getUserRoundStats = async (userId) => {
   const query = `
     SELECT
