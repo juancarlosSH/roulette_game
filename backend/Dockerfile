@@ -1,44 +1,24 @@
-# Use official Node.js image with Alpine for smaller size
 FROM node:18-alpine
 
-# Install PostgreSQL client and required dependencies
+# Instalar dependencias
 RUN apk add --no-cache postgresql-client bash
 
-# Create and set working directory
+# Configurar directorio de trabajo
 WORKDIR /app
 
-# 1. Copy package files first for better layer caching
+# Copiar archivos de dependencias
 COPY package*.json ./
+RUN npm install --omit=dev && npm cache clean --force
 
-# Install production dependencies only (remove devDependencies)
-RUN npm install --production && \
-  npm cache clean --force
-
-# 2. Copy the rest of the files
+# Copiar el resto de la aplicación
 COPY . .
 
-# Set up directories structure
-RUN mkdir -p /db && \
-  mv /app/db/init.sql /db/init.sql && \
-  chmod +x /app/entrypoint.sh
+# Dar permisos al entrypoint
+RUN chmod +x entrypoint.sh
 
-# Environment variables (documentation purposes)
-ENV NODE_ENV=production \
-  DB_HOST=postgres \
-  DB_PORT=5432 \
-  DB_USER=postgres \
-  DB_NAME=roulette_game \
-  APP_PORT=3000
+# Variables de entorno
+ENV NODE_ENV=production
+EXPOSE 3000
 
-# Expose the application port
-EXPOSE $APP_PORT
-
-# Health check (optional but recommended)
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD curl -f http://localhost:$APP_PORT/health || exit 1
-
-# Use entrypoint with exec form for proper signal handling
 ENTRYPOINT ["./entrypoint.sh"]
-
-# Default command to run the application
 CMD ["npm", "start"]
