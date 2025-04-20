@@ -1,24 +1,32 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { Navbar } from "./components/Navbar/index.js";
+import { ErrorMessage } from "./components/ErrorMessage/index.js";
+import { Router } from "./utils/router.js";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+/**
+ * Main function to initialize the application
+ */
+function main() {
+  try {
+    // Check if the navbar container exists
+    const navbarContainer = document.getElementById("navbar");
+    if (!navbarContainer) {
+      throw new Error("Navbar container not found");
+    }
 
-setupCounter(document.querySelector('#counter'))
+    // Initialize the Navbar component
+    new Navbar();
+
+    // Check if the app container exists
+    let elAppContainer = document.getElementById("app");
+    if (!elAppContainer) {
+      throw new Error("App container not found");
+    }
+
+    new Router();
+  } catch (oError) {
+    console.error("App initialization failed:", oError);
+    new ErrorMessage(oError.message);
+  }
+}
+
+main();
