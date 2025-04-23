@@ -1,8 +1,16 @@
 import express from "express";
-import gameRoutes from "../routes/gameRoutes.js";
+import cors from "cors";
+import gameRoutes from "./routes/gameRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 app.use(express.json());
 
